@@ -18,10 +18,6 @@ build_report <- function(res, config = CONFIG) {
   rule("=")
   add("Generated:   ", format(Sys.time(), "%Y-%m-%d %H:%M:%S %Z"))
   add("Data source: ", res$source_file)
-  if (isTRUE(res$is_sample)) {
-    add("")
-    add("*** DE-IDENTIFIED SAMPLE DATA -- NOT THE PANEL RESULT ***")
-  }
   add("R version:   ", paste(R.version$major, R.version$minor, sep = "."))
   add("Round 1 fielded: ", config$field_open, " to ", config$field_close)
   add("")

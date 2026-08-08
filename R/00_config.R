@@ -96,10 +96,9 @@ CONFIG <- list(
 
   ## ---- Paths -------------------------------------------------------------
 
-  # Real panel data goes in data/raw/ (gitignored). The de-identified sample
-  # shipped with the repo is the fallback so the pipeline runs out of the box.
+  # Panel data goes in data/raw/, which is gitignored. Nothing ships with the
+  # repo, so the pipeline needs a ratings file supplied before it will run.
   data_raw_dir    = file.path("data", "raw"),
-  data_sample_file = file.path("data", "sample", "pact_delphi_ratings_sample.csv"),
   out_tables      = file.path("output", "tables"),
   out_figures     = file.path("output", "figures"),
   out_log         = file.path("output", "session_info.txt"),

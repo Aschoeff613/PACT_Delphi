@@ -1,10 +1,12 @@
 # --- Panel data: never commit -----------------------------------------------
-# Real ratings, including anything with panellist names or emails, live here
-# and stay out of version control. The de-identified sample under
-# data/sample/ is the only data that is tracked.
+# No panel data is tracked, de-identified or otherwise. Reviewer codes,
+# timestamps and free-text comments are re-identifying in a panel this small,
+# so ratings files stay out of version control entirely.
 data/raw/*
 !data/raw/.gitkeep
+data/sample/
 data/private/
+*.csv
 *.xlsx
 *.xls
 

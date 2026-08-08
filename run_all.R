@@ -44,7 +44,6 @@ rr <- response_rate(cmp)
 res <- list(
   data            = d,
   source_file     = attr(d, "source_file"),
-  is_sample       = isTRUE(attr(d, "is_sample")),
   completeness    = cmp,
   dim_summary     = dim_summary,
   classified      = classified,
@@ -94,7 +93,4 @@ cat(sprintf("Non-consensus:      %d\n", sum(!classified$eligible)))
 cat("Kendall W:          ",
     paste(sprintf("%s = %s", agreement$label, fmt_num(agreement$W, 3)),
           collapse = ";  "), "\n", sep = "")
-if (isTRUE(res$is_sample)) {
-  cat("\n*** These results are from the DE-IDENTIFIED SAMPLE dataset. ***\n")
-}
 cat("\nFull report: output/results_report.txt\n\n")

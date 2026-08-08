@@ -20,9 +20,9 @@ cd PACT_Delphi
 Rscript run_all.R
 ```
 
-With no data in `data/raw/`, the pipeline runs on the de-identified sample
-shipped in `data/sample/` and says so loudly in the console and at the top of
-the report. To run on the real panel export:
+No panel data ships with this repo, so a fresh clone has nothing to analyse
+until you supply an export. The pipeline stops with an instruction if
+`data/raw/` is empty.
 
 ```bash
 cp /path/to/panel_export.csv data/raw/
@@ -221,9 +221,7 @@ R/
 ├── 06_figures.R       figures (base graphics)
 └── 07_report.R        assembles output/results_report.txt
 run_all.R              runs everything
-data/
-├── raw/               real panel data (gitignored)
-└── sample/            de-identified sample, tracked
+data/raw/              panel data (gitignored, empty on clone)
 docs/methods.md        the Methods text this code implements
 ```
 
@@ -231,14 +229,15 @@ docs/methods.md        the Methods text this code implements
 
 ## Data and privacy
 
-Real panel data — anything with panellist names, emails, or institutions — goes
-in `data/raw/`, which is gitignored. The sample in `data/sample/` has names,
-emails, and institutions removed; reviewer codes, specialty, ratings, and
-free-text comments are retained.
+No panel data is tracked in this repository, de-identified or otherwise.
+Ratings files go in `data/raw/`, which is gitignored, and `*.csv` is ignored
+repo-wide as a backstop.
 
-Sample results are illustrative only. With six respondents, the 80% threshold
-requires 5 of 5 or 5 of 6, so the eligible set from the sample is not
-informative about what the full panel will produce.
+Stripping names and emails is not sufficient de-identification for a panel this
+size. Reviewer codes are stable across rounds, free-text comments carry
+specialty-specific detail, and per-second submission timestamps are close to
+unique — together they re-identify a panellist to anyone holding the roster.
+Treat every ratings export as identifiable and keep it out of git.
 
 ---
 

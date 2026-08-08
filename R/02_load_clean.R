@@ -13,10 +13,9 @@
 
 #' Locate the ratings file.
 #'
-#' Prefers a CSV in data/raw/ (real panel data, gitignored). Falls back to the
-#' de-identified sample so a fresh clone runs without any setup. The fallback
-#' is announced loudly -- silently analysing sample data would be worse than
-#' failing.
+#' Reads a CSV from data/raw/, which is gitignored. No data ships with the
+#' repo, so a fresh clone has nothing to fall back to and stops here with an
+#' instruction rather than analysing a stand-in.
 find_ratings_file <- function(config = CONFIG) {
   raw <- list.files(config$data_raw_dir, pattern = "\\.csv$",
                     full.names = TRUE, ignore.case = TRUE)
@@ -29,10 +28,9 @@ find_ratings_file <- function(config = CONFIG) {
          ". Leave exactly one, or pass a path to load_ratings().",
          call. = FALSE)
   }
-  message("\n!! No CSV in ", config$data_raw_dir, ".",
-          "\n!! Falling back to the DE-IDENTIFIED SAMPLE dataset.",
-          "\n!! Results below are illustrative, not the panel result.\n")
-  config$data_sample_file
+  stop("No CSV in ", config$data_raw_dir, ". Copy the panel export there, ",
+       "or pass a path: Rscript run_all.R /path/to/export.csv",
+       call. = FALSE)
 }
 
 #' Read and clean the ratings.
@@ -113,9 +111,6 @@ load_ratings <- function(path = NULL, config = CONFIG) {
   rownames(d) <- NULL
 
   attr(d, "source_file") <- path
-  attr(d, "is_sample") <- identical(normalizePath(path, mustWork = FALSE),
-                                    normalizePath(config$data_sample_file,
-                                                  mustWork = FALSE))
   d
 }
 
