@@ -17,10 +17,9 @@ CONFIG <- list(
   # Panel response rate must exceed 70%.
   response_rate_threshold = 0.70,
 
-  # Number of panellists invited to Round 1. SET THIS to the true denominator
-  # before running on the final data -- the response rate is meaningless if it
-  # is left at the number of people who happened to answer.
-  n_invited = NA_integer_,
+  # Number of panellists invited to Round 1. This is the denominator for the
+  # response rate, so it is the number *invited*, not the number who answered.
+  n_invited = 50L,
 
   # Size of the final taxonomy selected by the leadership round.
   n_final_taxonomy = 12L,

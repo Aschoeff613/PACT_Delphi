@@ -38,17 +38,21 @@ bare R install.
 
 ---
 
-## Before running on the real data
+## Configuration
 
-Open `R/00_config.R` and set:
+All study decisions live in `R/00_config.R` and are already set to the
+prespecified values:
 
 ```r
-n_invited = NA_integer_,   # <- the number of panellists invited to Round 1
+consensus_threshold     = 0.80,   # >=80% rating 4 or 5
+response_rate_threshold = 0.70,   # >70% of those invited
+n_invited               = 50L,    # panellists invited to Round 1
+n_final_taxonomy        = 12L,    # tasks selected by the leadership round
 ```
 
-Everything else is already set to the prespecified values. The response rate
-cannot be computed until `n_invited` is filled in; the pipeline warns rather
-than guessing.
+Nothing needs changing before the final data arrives. If the panel roster
+turns out to differ from 50, update `n_invited` — it is the denominator for
+the response rate, so it is the number *invited*, not the number who answered.
 
 ---
 
