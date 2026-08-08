@@ -17,8 +17,9 @@ CONFIG <- list(
   # Panel response rate must exceed 70%.
   response_rate_threshold = 0.70,
 
-  # Number of panellists invited to Round 1. This is the denominator for the
-  # response rate, so it is the number *invited*, not the number who answered.
+  # Number of panellists invited to Round 1: the Round 1 invitation was sent to
+  # the full PACT group of 50. This is the denominator for the response rate,
+  # so it is the number invited, not the number who answered.
   n_invited = 50L,
 
   # Size of the final taxonomy selected by the leadership round.
@@ -30,12 +31,52 @@ CONFIG <- list(
   rating_max = 5L,
 
   # The three rating dimensions, in the order they should appear in tables.
-  # Names are the column names in the data; labels are for output.
+  # Names are the column names in the data; labels are the instrument wording.
+  #
+  # Note the third: the column is `ai_relevance`, but the instrument calls it
+  # AI Augmentation Potential. Output uses the instrument wording; the column
+  # name is left alone so the Supabase export loads unmodified.
   dimensions = c(
     clinical_relevance   = "Clinical relevance",
     performance_variance = "Performance variance",
-    ai_relevance         = "AI relevance"
+    ai_relevance         = "AI augmentation potential"
   ),
+
+  # The question stem as the panel saw it. Used in table footnotes so a reader
+  # knows what was actually asked.
+  dimension_questions = c(
+    clinical_relevance   = "How clinically significant is this task - how much does it matter that it is done well?",
+    performance_variance = "How much would competent clinicians disagree about the right path forward on this task?",
+    ai_relevance         = "Could AI (including ML, LLMs, agents, etc.) meaningfully augment this task?"
+  ),
+
+  # Anchor label for each point 1-5, per dimension, exactly as displayed.
+  dimension_anchors = list(
+    clinical_relevance   = c("Very low", "Low", "Moderate", "High", "Very high"),
+    performance_variance = c("Strong consensus", "Minor variation",
+                             "Moderate variation", "Substantial disagreement",
+                             "Wide disagreement"),
+    ai_relevance         = c("AI unlikely to help", "Marginal AI value",
+                             "Moderate AI value", "Clear AI benefit",
+                             "AI core to this task")
+  ),
+
+  # The descriptive text at each end of the scale.
+  dimension_poles = list(
+    clinical_relevance   = c(low  = "Minor - little bearing on patient care",
+                             high = "Major - materially shapes patient care"),
+    performance_variance = c(low  = "Clinicians would nearly all take the same approach",
+                             high = "Clinicians would vary widely on the path forward"),
+    ai_relevance         = c(low  = "Requires judgment AI cannot replicate",
+                             high = "AI-demonstrated capability in this area")
+  ),
+
+  ## ---- Fielding ----------------------------------------------------------
+
+  # Round 1 open and close dates. Recorded here rather than derived from
+  # completed_at, which gives the first and last response, not the window.
+  field_open  = "2026-08-03",
+  field_close = "2026-08-11",
 
   ## ---- Agreement statistics ---------------------------------------------
 

@@ -44,15 +44,43 @@ All study decisions live in `R/00_config.R` and are already set to the
 prespecified values:
 
 ```r
-consensus_threshold     = 0.80,   # >=80% rating 4 or 5
-response_rate_threshold = 0.70,   # >70% of those invited
-n_invited               = 50L,    # panellists invited to Round 1
-n_final_taxonomy        = 12L,    # tasks selected by the leadership round
+consensus_threshold     = 0.80,          # >=80% rating 4 or 5
+response_rate_threshold = 0.70,          # >70% of those invited
+n_invited               = 50L,           # full PACT group, Round 1 invitation
+n_final_taxonomy        = 12L,           # tasks selected by the leadership round
+field_open              = "2026-08-03",  # Round 1 open
+field_close             = "2026-08-11",  # Round 1 close
 ```
 
-Nothing needs changing before the final data arrives. If the panel roster
-turns out to differ from 50, update `n_invited` — it is the denominator for
-the response rate, so it is the number *invited*, not the number who answered.
+The instrument — question stems, all five anchor labels per dimension, and the
+low/high pole text — is also in the config and is written out as
+`output/tables/table0_rating_scale.csv` for the supplement.
+
+Nothing needs changing before the final data arrives.
+
+### Scale direction
+
+All three scales run the same way: **a higher rating always means the task is a
+stronger benchmark candidate**, so the same "4 or 5" rule applies to all three
+without reverse-coding.
+
+Worth being explicit about the second one, because the wording inverts what
+"consensus" usually implies:
+
+| Dimension | 4 | 5 |
+|---|---|---|
+| Clinical relevance | High | Very high |
+| Performance variance | Substantial disagreement | Wide disagreement |
+| AI augmentation potential | Clear AI benefit | AI core to this task |
+
+Consensus on **performance variance** therefore means ≥80% of panellists agree
+that competent clinicians *would* disagree about the right path forward. Panel
+agreement about the presence of clinical disagreement — not agreement about the
+task itself.
+
+Note also that the third column in the export is `ai_relevance`, while the
+instrument calls it **AI augmentation potential**. Output uses the instrument
+wording; the column name is left alone so the export loads unmodified.
 
 ---
 
@@ -163,6 +191,7 @@ output/
 │   ├── fig1_consensus_by_task.png     <- % rating 4–5 by task, 80% line marked
 │   └── fig2_rating_distribution.png
 └── tables/
+    ├── table0_rating_scale.csv        <- the instrument, for the supplement
     ├── table1_consensus_by_task.csv   <- main consensus table
     ├── table2_agreement.csv           <- Kendall W and ICC
     ├── table3_response_rate.csv

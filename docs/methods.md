@@ -33,6 +33,50 @@ the code does what the manuscript says.
 
 ---
 
+## The instrument
+
+Round 1 was fielded **3–11 August 2026**. The invitation went to the full PACT
+group of 50, which is the response-rate denominator.
+
+Each task was rated 1–5 on three dimensions:
+
+**Clinical relevance** — *How clinically significant is this task — how much
+does it matter that it is done well?*
+1 Very low · 2 Low · 3 Moderate · **4 High** · **5 Very high**
+Low pole: minor, little bearing on patient care. High pole: major, materially
+shapes patient care.
+
+**Performance variance** — *How much would competent clinicians disagree about
+the right path forward on this task?*
+1 Strong consensus · 2 Minor variation · 3 Moderate variation ·
+**4 Substantial disagreement** · **5 Wide disagreement**
+Low pole: clinicians would nearly all take the same approach. High pole:
+clinicians would vary widely on the path forward.
+
+**AI augmentation potential** — *Could AI (including ML, LLMs, agents, etc.)
+meaningfully augment this task?*
+1 AI unlikely to help · 2 Marginal AI value · 3 Moderate AI value ·
+**4 Clear AI benefit** · **5 AI core to this task**
+Low pole: requires judgment AI cannot replicate. High pole: AI-demonstrated
+capability in this area.
+
+Panellists could also leave an optional free-text comment and flag a task for
+panel discussion.
+
+All three scales are oriented the same way — higher means a stronger benchmark
+candidate — so the "4 or 5" rule applies uniformly with no reverse-coding. The
+bolded points above are the two that count toward consensus.
+
+**Reading consensus on performance variance.** Because 4 and 5 on that scale
+denote *disagreement*, consensus there means ≥80% of panellists agree that
+competent clinicians would disagree about the task. It is agreement about the
+presence of clinical variation, not agreement about how to do the task. Worth
+one sentence in the manuscript so a reader does not read it as contradictory.
+
+The instrument is generated into `output/tables/table0_rating_scale.csv` from
+`CONFIG$dimension_anchors` and `CONFIG$dimension_questions`, so the wording in
+the supplement cannot drift from the wording in the code.
+
 ## Sentence-by-sentence mapping
 
 | Methods statement | Implementation | Output |

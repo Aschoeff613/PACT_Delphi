@@ -23,15 +23,45 @@ build_report <- function(res, config = CONFIG) {
     add("*** DE-IDENTIFIED SAMPLE DATA -- NOT THE PANEL RESULT ***")
   }
   add("R version:   ", paste(R.version$major, R.version$minor, sep = "."))
+  add("Round 1 fielded: ", config$field_open, " to ", config$field_close)
   add("")
+
+  ## ---- The instrument -----------------------------------------------------
+  rule("=")
+  add("0. RATING INSTRUMENT")
+  rule("=")
+  add("Each task was rated on three dimensions, 1-5. Consensus counts ratings ",
+      "of ", config$consensus_rating_min, " or ", config$rating_max,
+      " -- the top two")
+  add("points -- on every dimension, so all three scales run in the same ",
+      "direction:")
+  add("a higher rating always means the task is a stronger candidate for the ",
+      "benchmark.")
+  add("")
+  for (v in DIM_COLS) {
+    a <- config$dimension_anchors[[v]]
+    p <- config$dimension_poles[[v]]
+    add(unname(config$dimensions[v]))
+    add("  ", unname(config$dimension_questions[v]))
+    for (i in seq_along(a)) {
+      add(sprintf("    %d  %-26s%s", i, a[i],
+                  ifelse(i >= config$consensus_rating_min,
+                         "  <- counts toward consensus", "")))
+    }
+    add("    Low:  ", p[["low"]])
+    add("    High: ", p[["high"]])
+    add("")
+  }
 
   ## ---- Response rate ------------------------------------------------------
   rule("=")
   add("1. PANEL RESPONSE RATE")
   rule("=")
   rr <- res$response
+  add("Round 1 open: ", config$field_open, " to ", config$field_close)
   add("Invited:     ", ifelse(is.na(rr$n_invited), "NOT SET (see R/00_config.R)",
-                              rr$n_invited))
+                              rr$n_invited),
+      " (Round 1 invitation sent to the full PACT group)")
   add("Responding:  ", rr$n_respondents)
   if (!is.na(rr$rate)) {
     add("Rate:        ", rr$label, "  (95% CI ", fmt_num(rr$ci_lo, 1), "-",

@@ -58,6 +58,7 @@ res <- list(
 ## ---- Write -----------------------------------------------------------------
 say_header("Writing output")
 
+write_table(scale_table(),                    "table0_rating_scale")
 write_table(consensus_table(classified),      "table1_consensus_by_task")
 write_table(format_agreement(agreement),      "table2_agreement")
 write_table(response_rate_table(rr),          "table3_response_rate")

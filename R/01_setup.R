@@ -92,6 +92,27 @@ write_table <- function(df, name, dir = CONFIG$out_tables) {
   invisible(path)
 }
 
+#' The rating instrument as a table: question stem and all five anchors per
+#' dimension. Belongs in the supplement so a reader can see what the panel was
+#' actually asked, and makes the direction of each scale explicit.
+scale_table <- function(config = CONFIG) {
+  rows <- lapply(DIM_COLS, function(v) {
+    a <- config$dimension_anchors[[v]]
+    p <- config$dimension_poles[[v]]
+    data.frame(
+      Dimension = unname(config$dimensions[v]),
+      Question  = unname(config$dimension_questions[v]),
+      `1` = a[1], `2` = a[2], `3` = a[3], `4` = a[4], `5` = a[5],
+      `Low anchor`  = unname(p[["low"]]),
+      `High anchor` = unname(p[["high"]]),
+      check.names = FALSE, stringsAsFactors = FALSE
+    )
+  })
+  out <- do.call(rbind, rows)
+  rownames(out) <- NULL
+  out
+}
+
 #' Section header for console output.
 say_header <- function(txt) {
   bar <- strrep("=", 78)

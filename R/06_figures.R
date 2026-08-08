@@ -92,10 +92,10 @@ plot_rating_distribution <- function(d, config = CONFIG,
   }, numeric(length(levels_1_5)))
   pct <- sweep(counts, 2, colSums(counts), "/") * 100
 
-  f <- open_device(file, width = 7.5, height = 4.6)
+  f <- open_device(file, width = 8.2, height = 5.0)
   on.exit(grDevices::dev.off(), add = TRUE)
 
-  op <- graphics::par(mar = c(4.2, 4.4, 3.0, 8.2), xpd = TRUE)
+  op <- graphics::par(mar = c(5.6, 4.4, 3.4, 8.2), xpd = TRUE)
   on.exit(graphics::par(op), add = TRUE)
 
   shades <- grDevices::grey.colors(length(levels_1_5), start = 0.88, end = 0.28)
@@ -104,15 +104,33 @@ plot_rating_distribution <- function(d, config = CONFIG,
                           ylab = "Ratings (%)", cex.names = 0.82,
                           cex.axis = 0.85, cex.lab = 0.92)
 
-  graphics::segments(bp - 0.5, 100 * (1 - config$consensus_threshold),
-                     bp + 0.5, 100 * (1 - config$consensus_threshold),
-                     lty = 2, col = "#b7472a", lwd = 1.3)
+  # Label the share of ratings in the top two points. A threshold line would be
+  # misleading here: the 80% rule applies per task, not to the pooled
+  # distribution shown in these bars.
+  top <- colSums(pct[levels_1_5 >= config$consensus_rating_min, , drop = FALSE])
+  graphics::segments(bp - 0.5, 100 - top, bp + 0.5, 100 - top,
+                     lty = 2, col = "#b7472a", lwd = 1.4)
+  graphics::text(bp, 100 - top, labels = sprintf("%.0f%% rated 4-5", top),
+                 pos = 3, offset = 0.35, cex = 0.76, col = "#b7472a")
+
+  # Anchors for the top two points differ by dimension, so name them. Stacked
+  # on two lines -- side by side they collide at this width.
+  a4 <- vapply(DIM_COLS, function(v) config$dimension_anchors[[v]][config$consensus_rating_min],
+               character(1))
+  a5 <- vapply(DIM_COLS, function(v) config$dimension_anchors[[v]][config$rating_max],
+               character(1))
+  graphics::mtext(paste("4 =", a4), side = 1, at = bp, line = 1.9, cex = 0.6,
+                  col = "grey40")
+  graphics::mtext(paste("5 =", a5), side = 1, at = bp, line = 2.7, cex = 0.6,
+                  col = "grey40")
 
   graphics::legend(x = max(bp) + 0.75, y = 100,
                    legend = rev(paste("Rating", levels_1_5)),
                    fill = rev(shades), border = "white", bty = "n", cex = 0.78)
   graphics::title(main = "Distribution of ratings by dimension", adj = 0,
                   cex.main = 1.05)
+  graphics::mtext("Pooled across all tasks; the 80% consensus rule is applied per task, not here",
+                  side = 3, adj = 0, line = 0.1, cex = 0.72, col = "grey40")
 
   message("  wrote ", f)
   invisible(f)

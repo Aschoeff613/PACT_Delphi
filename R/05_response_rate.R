@@ -45,9 +45,10 @@ response_rate <- function(completeness, config = CONFIG) {
   )
 }
 
-response_rate_table <- function(rr) {
+response_rate_table <- function(rr, config = CONFIG) {
   data.frame(
-    Measure = c("Panellists invited",
+    Measure = c("Round 1 fielded",
+                "Panellists invited",
                 "Panellists responding",
                 "Response rate",
                 "Prespecified threshold",
@@ -55,6 +56,7 @@ response_rate_table <- function(rr) {
                 "Complete responses",
                 "Partial responses (retained for dimensions answered)"),
     Value = c(
+      sprintf("%s to %s", config$field_open, config$field_close),
       ifelse(is.na(rr$n_invited), "not set", as.character(rr$n_invited)),
       as.character(rr$n_respondents),
       ifelse(is.na(rr$rate), "--",
