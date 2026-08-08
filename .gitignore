@@ -1,0 +1,32 @@
+# --- Panel data: never commit -----------------------------------------------
+# Real ratings, including anything with panellist names or emails, live here
+# and stay out of version control. The de-identified sample under
+# data/sample/ is the only data that is tracked.
+data/raw/*
+!data/raw/.gitkeep
+data/private/
+*.xlsx
+*.xls
+
+# --- Generated output --------------------------------------------------------
+# Everything in output/ is reproducible from run_all.R. Committing it invites
+# a stale table ending up in the manuscript. run_all.R creates the directories
+# it needs, so nothing has to be tracked here.
+output/
+Rplots.pdf
+
+# --- R -----------------------------------------------------------------------
+.Rhistory
+.RData
+.Rproj.user/
+.Renviron
+*.Rcheck/
+renv/library/
+renv/staging/
+
+# --- OS / editor -------------------------------------------------------------
+.DS_Store
+Thumbs.db
+*~
+.vscode/
+.idea/
