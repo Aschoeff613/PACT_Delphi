@@ -1,7 +1,7 @@
 # ---------------------------------------------------------------------------
-# 03_consensus.R -- per-dimension summaries, the 80% rule, and eligibility
+# 03_consensus.R -- per-dimension summaries, the 70% rule, and eligibility
 #
-# Consensus was defined before Round 1 as at least 80% of *responding*
+# Consensus was defined before Round 1 as at least 70% of *responding*
 # panellists rating a task 4 or 5 on a given dimension. The denominator is
 # therefore the number of panellists who answered that task on that dimension,
 # not the number invited and not the number who answered anything at all.

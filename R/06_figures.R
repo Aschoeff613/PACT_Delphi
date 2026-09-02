@@ -19,7 +19,7 @@ open_device <- function(file, width, height, res = 300) {
   file
 }
 
-#' Proportion rating 4-5 by task and dimension, with the 80% threshold marked.
+#' Proportion rating 4-5 by task and dimension, with the 70% threshold marked.
 plot_consensus <- function(dim_summary, classified, config = CONFIG,
                            file = file.path(config$out_figures,
                                             "fig1_consensus_by_task.png")) {
@@ -105,7 +105,7 @@ plot_rating_distribution <- function(d, config = CONFIG,
                           cex.axis = 0.85, cex.lab = 0.92)
 
   # Label the share of ratings in the top two points. A threshold line would be
-  # misleading here: the 80% rule applies per task, not to the pooled
+  # misleading here: the 70% rule applies per task, not to the pooled
   # distribution shown in these bars.
   top <- colSums(pct[levels_1_5 >= config$consensus_rating_min, , drop = FALSE])
   graphics::segments(bp - 0.5, 100 - top, bp + 0.5, 100 - top,
@@ -129,7 +129,7 @@ plot_rating_distribution <- function(d, config = CONFIG,
                    fill = rev(shades), border = "white", bty = "n", cex = 0.78)
   graphics::title(main = "Distribution of ratings by dimension", adj = 0,
                   cex.main = 1.05)
-  graphics::mtext("Pooled across all tasks; the 80% consensus rule is applied per task, not here",
+  graphics::mtext("Pooled across all tasks; the 70% consensus rule is applied per task, not here",
                   side = 3, adj = 0, line = 0.1, cex = 0.72, col = "grey40")
 
   message("  wrote ", f)

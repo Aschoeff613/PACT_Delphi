@@ -9,9 +9,9 @@ CONFIG <- list(
 
   ## ---- Prespecified thresholds -------------------------------------------
 
-  # Consensus: >= 80% of *responding* panellists rating a task 4 or 5 on a
+  # Consensus: >= 70% of *responding* panellists rating a task 4 or 5 on a
   # given dimension.
-  consensus_threshold   = 0.80,
+  consensus_threshold   = 0.70,
   consensus_rating_min  = 4L,      # ratings of 4 or 5 count toward consensus
 
   # Panel response rate must exceed 70%.

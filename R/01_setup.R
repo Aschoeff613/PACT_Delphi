@@ -57,7 +57,7 @@ median_iqr <- function(x, digits = 1) {
 #' Reported alongside the raw proportion because with a panel of this size a
 #' point estimate on its own overstates precision. Wilson rather than Wald: it
 #' behaves sensibly when the proportion is near 0 or 1, which is exactly where
-#' the 80% consensus threshold sits.
+#' the 70% consensus threshold sits.
 wilson_ci <- function(k, n, conf = 0.95) {
   if (is.na(n) || n == 0) return(c(lower = NA_real_, upper = NA_real_))
   z  <- stats::qnorm(1 - (1 - conf) / 2)

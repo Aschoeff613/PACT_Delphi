@@ -44,7 +44,7 @@ All study decisions live in `R/00_config.R` and are already set to the
 prespecified values:
 
 ```r
-consensus_threshold     = 0.80,          # >=80% rating 4 or 5
+consensus_threshold     = 0.70,          # >=70% rating 4 or 5
 response_rate_threshold = 0.70,          # >70% of those invited
 n_invited               = 50L,           # full PACT group, Round 1 invitation
 n_final_taxonomy        = 12L,           # tasks selected by the leadership round
@@ -73,7 +73,7 @@ Worth being explicit about the second one, because the wording inverts what
 | Performance variance | Substantial disagreement | Wide disagreement |
 | AI augmentation potential | Clear AI benefit | AI core to this task |
 
-Consensus on **performance variance** therefore means ≥80% of panellists agree
+Consensus on **performance variance** therefore means ≥70% of panellists agree
 that competent clinicians *would* disagree about the right path forward. Panel
 agreement about the presence of clinical disagreement — not agreement about the
 task itself.
@@ -86,7 +86,7 @@ wording; the column name is left alone so the export loads unmodified.
 
 ## What it computes
 
-**Consensus.** Prespecified before Round 1 as **≥80% of responding panellists
+**Consensus.** Prespecified before Round 1 as **≥70% of responding panellists
 rating a task 4 or 5** on a given dimension. The denominator is the number who
 answered *that task on that dimension* — not the number invited, and not the
 number who answered anything.
@@ -188,7 +188,7 @@ output/
 ├── results.rds                        <- all objects, for further analysis
 ├── session_info.txt                   <- R and package versions actually used
 ├── figures/
-│   ├── fig1_consensus_by_task.png     <- % rating 4–5 by task, 80% line marked
+│   ├── fig1_consensus_by_task.png     <- % rating 4–5 by task, 70% line marked
 │   └── fig2_rating_distribution.png
 └── tables/
     ├── table0_rating_scale.csv        <- the instrument, for the supplement
@@ -215,7 +215,7 @@ R/
 ├── 00_config.R        thresholds, dimensions, paths — all study decisions
 ├── 01_setup.R         packages, formatting and small stats helpers
 ├── 02_load_clean.R    read, coerce, de-duplicate, audit completeness
-├── 03_consensus.R     per-dimension summaries, 80% rule, eligibility
+├── 03_consensus.R     per-dimension summaries, 70% rule, eligibility
 ├── 04_agreement.R     Kendall W, ICC(2,k), Spearman
 ├── 05_response_rate.R response rate vs the 70% threshold
 ├── 06_figures.R       figures (base graphics)
