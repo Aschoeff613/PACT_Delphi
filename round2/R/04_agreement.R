@@ -68,8 +68,12 @@ kendall_w <- function(m, config = CONFIG) {
     }
   }
 
+  # irr::kendall reports df only inside stat.name ("Chisq(16)"), so it is
+  # derived here rather than read off the object -- k$df1 does not exist, and
+  # reading it yields NULL, which silently drops a row from the output table.
+  # Same derivation as round1/R/04_agreement.R.
   list(
-    W = k$value, chisq = k$statistic, df = k$df1, p = k$p.value,
+    W = k$value, chisq = k$statistic, df = nrow(cr$matrix) - 1L, p = k$p.value,
     n_raters = cr$n_raters_used, n_items = nrow(cr$matrix),
     dropped = cr$dropped, ci = ci
   )

@@ -35,9 +35,11 @@ plot_inclusion <- function(inclusion, config = CONFIG,
                           cex.names = 0.78, cex.axis = 0.85, cex.lab = 0.9)
 
   # Wilson intervals: a point estimate on a panel this size overstates
-  # precision, so the interval is drawn on every bar.
+  # precision, so the interval is drawn on every bar. Light on the filled bars
+  # and dark on the empty ones -- a single colour is unreadable against one or
+  # the other.
   graphics::segments(100 * x$ci_lower, bp, 100 * x$ci_upper, bp,
-                     col = "#444c57", lwd = 1.4)
+                     col = ifelse(x$consensus, "#f2d5d5", "#444c57"), lwd = 1.4)
 
   graphics::abline(v = 100 * config$inclusion_threshold, lty = 2, col = "#8c1515")
   graphics::mtext(sprintf("%.0f%% consensus threshold", 100 * config$inclusion_threshold),
