@@ -322,10 +322,8 @@ export function RankingBoard({ tasks, startOrder, reviewerName, submittedAt }: P
           <li>Drag a bar by the handle or any empty part of it, or focus the handle and use ↑ / ↓</li>
           <li>Hover a task name for its definition and worked examples from the ED and primary care — click to keep the card open</li>
           <li>
-            <strong>CLIN</strong>, <strong>VAR</strong> and <strong>AI</strong> on each bar are your
-            panel&rsquo;s Round 1 averages out of 5 — clinical relevance, performance variance and AI
-            augmentation potential. They are shown as a reminder of where the group landed, not as an
-            order to follow
+            The three numbers on each bar are your panel&rsquo;s Round 1 averages for that task, out
+            of 5. They are shown as a reminder of where the group landed, not as an order to follow
           </li>
           <li>The list starts in a random order, different for each panellist</li>
           <li>All 17 positions are submitted together — nothing saves until you submit</li>
@@ -406,15 +404,15 @@ export function RankingBoard({ tasks, startOrder, reviewerName, submittedAt }: P
                       so the three read as columns down the list. */}
                   <span className="rank-scores" aria-hidden="true">
                     <span className="rank-score" title={`Clinical relevance, Round 1 mean ${task.round1.clinicalRelevance.toFixed(2)} of 5 (n=${task.round1.n})`}>
-                      <span className="rank-score-key">CLIN</span>
+                      <span className="rank-score-key">Clinical relevance</span>
                       <span className="rank-score-val">{task.round1.clinicalRelevance.toFixed(2)}</span>
                     </span>
                     <span className="rank-score" title={`Performance variance, Round 1 mean ${task.round1.performanceVariance.toFixed(2)} of 5 (n=${task.round1.n})`}>
-                      <span className="rank-score-key">VAR</span>
+                      <span className="rank-score-key">Performance variance</span>
                       <span className="rank-score-val">{task.round1.performanceVariance.toFixed(2)}</span>
                     </span>
                     <span className="rank-score" title={`AI augmentation potential, Round 1 mean ${task.round1.aiAugmentation.toFixed(2)} of 5 (n=${task.round1.n})`}>
-                      <span className="rank-score-key">AI</span>
+                      <span className="rank-score-key">AI augmentation potential</span>
                       <span className="rank-score-val">{task.round1.aiAugmentation.toFixed(2)}</span>
                     </span>
                   </span>
