@@ -7,7 +7,7 @@ the code does what the manuscript says.
 ---
 
 > **Consensus and analysis.** Consensus was defined before Round 1 as at least
-> 70% of responding panellists rating a task 4 or 5 on a given dimension. A
+> 80% of responding panellists rating a task 4 or 5 on a given dimension. A
 > task was eligible for the final taxonomy only if it met that threshold on all
 > three dimensions; the leadership round then selected 12 from the eligible set
 > using the dimension rankings. Tasks meeting the threshold on one dimension or
@@ -25,7 +25,7 @@ the code does what the manuscript says.
 > ratings across rounds could not be assessed.
 >
 > Panel response rate is reported as respondents divided by invited, against the
-> prespecified threshold of more than 70%. Partially completed responses were
+> prespecified threshold of more than 80%. Partially completed responses were
 > retained for the dimensions answered and excluded elsewhere, and the number
 > affected is reported. Analyses were conducted in R version 4.4.1 (R Foundation
 > for Statistical Computing) using the irr and psych packages; analysis code is
@@ -68,7 +68,7 @@ candidate — so the "4 or 5" rule applies uniformly with no reverse-coding. The
 bolded points above are the two that count toward consensus.
 
 **Reading consensus on performance variance.** Because 4 and 5 on that scale
-denote *disagreement*, consensus there means ≥70% of panellists agree that
+denote *disagreement*, consensus there means ≥80% of panellists agree that
 competent clinicians would disagree about the task. It is agreement about the
 presence of clinical variation, not agreement about how to do the task. Worth
 one sentence in the manuscript so a reader does not read it as contradictory.
@@ -81,7 +81,7 @@ the supplement cannot drift from the wording in the code.
 
 | Methods statement | Implementation | Output |
 |---|---|---|
-| Consensus = ≥70% rating 4 or 5 | `CONFIG$consensus_threshold`, `CONFIG$consensus_rating_min`; `summarise_dimension()` in `R/03_consensus.R` | `table1`, `s1` |
+| Consensus = ≥80% rating 4 or 5 | `CONFIG$consensus_threshold`, `CONFIG$consensus_rating_min`; `summarise_dimension()` in `R/03_consensus.R` | `table1`, `s1` |
 | Denominator is *responding* panellists | `summarise_dimension()` drops `NA` before counting, so `n` is per task × dimension | `n` column in every table |
 | Eligible only if threshold met on all three dimensions | `classify_tasks()`, `eligible` column | `s2` |
 | Leadership round selects 12 from the eligible set using dimension rankings | `CONFIG$n_final_taxonomy`; `rank_within_dimension()` and `selection_rank` | `s3`, report §3 |
@@ -93,7 +93,7 @@ the supplement cannot drift from the wording in the code.
 | Spearman between the three dimensions | `spearman_dimensions()`, task level primary, rating level as sensitivity | `s4`, `s5` |
 | Kappa not reported | Not implemented, by design; the reason is printed in report §4 | report §4 |
 | Single round, stability not assessable | Stated in report §6 | report §6 |
-| Response rate vs >70% | `response_rate()` in `R/05_response_rate.R` | `table3` |
+| Response rate vs >80% | `response_rate()` in `R/05_response_rate.R` | `table3` |
 | Partial responses retained per dimension, number reported | `audit_completeness()`; per-dimension `NA` handling throughout | `s6`, report §1 |
 | R 4.4.1, irr and psych | `REQUIRED_PKGS` in `R/01_setup.R`; actual versions recorded at run time | `session_info.txt` |
 

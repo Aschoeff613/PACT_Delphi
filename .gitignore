@@ -2,10 +2,10 @@
 # No panel data is tracked, de-identified or otherwise. Reviewer codes,
 # timestamps and free-text comments are re-identifying in a panel this small,
 # so ratings files stay out of version control entirely.
-data/raw/*
-!data/raw/.gitkeep
-data/sample/
-data/private/
+*/data/raw/*
+!*/data/raw/.gitkeep
+*/data/sample/
+*/data/private/
 *.csv
 *.xlsx
 *.xls
@@ -15,6 +15,7 @@ data/private/
 # a stale table ending up in the manuscript. run_all.R creates the directories
 # it needs, so nothing has to be tracked here.
 output/
+*/output/
 Rplots.pdf
 
 # --- R -----------------------------------------------------------------------

@@ -1,7 +1,7 @@
 # ---------------------------------------------------------------------------
 # 05_response_rate.R -- panel response rate against the prespecified threshold
 #
-# Response rate = respondents / invited, prespecified threshold > 70%.
+# Response rate = respondents / invited, prespecified threshold > 80%.
 #
 # A panellist counts as a respondent if they submitted at least one rating.
 # Partial responses are retained for the dimensions answered and excluded

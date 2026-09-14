@@ -9,13 +9,13 @@ CONFIG <- list(
 
   ## ---- Prespecified thresholds -------------------------------------------
 
-  # Consensus: >= 70% of *responding* panellists rating a task 4 or 5 on a
+  # Consensus: >= 80% of *responding* panellists rating a task 4 or 5 on a
   # given dimension.
-  consensus_threshold   = 0.70,
+  consensus_threshold   = 0.80,
   consensus_rating_min  = 4L,      # ratings of 4 or 5 count toward consensus
 
-  # Panel response rate must exceed 70%.
-  response_rate_threshold = 0.70,
+  # Panel response rate must exceed 80%, per the technical design document.
+  response_rate_threshold = 0.80,
 
   # Number of panellists invited to Round 1: the Round 1 invitation was sent to
   # the full PACT group of 50. This is the denominator for the response rate,
