@@ -5,6 +5,15 @@ panel: a single-round rating exercise in which panellists rated candidate
 high-risk cognitive tasks on three dimensions, used to select the final task
 taxonomy.
 
+Reviewers asked for a validation round, so the repository now also holds the
+**Round 2 ranking instrument** in [`round2-app/`](round2-app/) — a small web app
+in which panellists place all 17 tasks in a single order, 1 to 17. It is
+deployed separately and shares the Round 1 Supabase project. The R pipeline
+below is independent of it and needs no Node installed.
+
+Round 2 rankings are not yet analysed: the loader and statistics in `R/` read
+Round 1's three 1–5 rating columns, not rank orders.
+
 This is the repository referenced by the Methods statement *"analysis code is
 available at [repository]."*
 
