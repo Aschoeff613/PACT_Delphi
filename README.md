@@ -1,252 +1,93 @@
 # PACT_Delphi
 
-Analysis code for the consensus and agreement analysis of the PACT Delphi
-panel: a single-round rating exercise in which panellists rated candidate
-high-risk cognitive tasks on three dimensions, used to select the final task
-taxonomy.
+Analysis code for the PACT Delphi, the modified Delphi process used to select
+the final set of high-risk clinical cognitive tasks for the PACT human–AI
+teaming benchmark.
 
 This is the repository referenced by the Methods statement *"analysis code is
 available at [repository]."*
 
-Stanford HealthRex — PACT (human–AI teaming benchmark).
+Stanford HealthRex — PACT.
 
 ---
 
-## Quick start
+## The two rounds
+
+The Delphi ran in two rounds, which ask different questions and so need
+different statistics. Each round is a self-contained analysis in its own
+folder, with its own config, pipeline, docs and output.
+
+| Folder | Round | What panellists did | Headline statistic |
+| --- | --- | --- | --- |
+| [`round1/`](round1/) | Round 1 | Rated all 17 candidate tasks on three 1–5 dimensions | Share rating a task 4 or 5 on a dimension, against the 80% consensus rule |
+| [`round2/`](round2/) | Round 2 | Placed all 17 tasks in a single order, 1 to 17 | Share placing a task in the top 12, against the same 80% rule |
 
 ```bash
-git clone https://github.com/Aschoeff613/PACT_Delphi.git
-cd PACT_Delphi
-Rscript run_all.R
+cd round1 && Rscript run_all.R     # consensus and agreement on the ratings
+cd round2 && Rscript run_all.R     # inclusion consensus on the rankings
 ```
 
-No panel data ships with this repo, so a fresh clone has nothing to analyse
-until you supply an export. The pipeline stops with an instruction if
-`data/raw/` is empty.
+Each round installs what it needs on first run and writes to its own
+`output/`. Neither needs the other to have been run.
 
-```bash
-cp /path/to/panel_export.csv data/raw/
-Rscript run_all.R
-# or point at a file directly:
-Rscript run_all.R /path/to/panel_export.csv
-```
+## Consensus threshold
 
-Requires R (developed against 4.4.1) and the `irr` and `psych` packages.
-`run_all.R` installs them on first run if they are missing. No other
-dependencies — base graphics, no tidyverse — so the analysis reproduces from a
-bare R install.
+**80% throughout, in both rounds.** A task has consensus on a dimension
+(Round 1) or for inclusion (Round 2) when at least 80% of *responding*
+panellists put it there.
 
----
+The threshold was prespecified at 80%, briefly lowered to 70% in this
+repository, and restored to 80% at reviewer request. Supplementary Table S1
+reports 80%, so the code and the supplement now agree. Both rounds read the
+value from their own config — `round1/R/00_config.R`
+(`consensus_threshold`) and `round2/R/00_config.R` (`inclusion_threshold`) —
+and nothing hardcodes it.
 
-## Configuration
+The response-rate threshold is a separate thing and remains at >70% in both
+rounds. It is not a consensus threshold, and the reviewer request was about
+consensus.
 
-All study decisions live in `R/00_config.R` and are already set to the
-prespecified values:
+## Why Round 2 is not just Round 1 with different numbers
 
-```r
-consensus_threshold     = 0.80,          # >=80% rating 4 or 5
-response_rate_threshold = 0.70,          # >70% of those invited
-n_invited               = 50L,           # full PACT group, Round 1 invitation
-n_final_taxonomy        = 12L,           # tasks selected by the leadership round
-field_open              = "2026-08-03",  # Round 1 open
-field_close             = "2026-08-11",  # Round 1 close
-```
+Round 1 asked how good each task was in isolation, which left the eligible set
+larger than the final taxonomy and gave no ordering inside it. Round 2 asked
+panellists to order all 17 against one another, starting from the set the
+leadership round had adopted.
 
-The instrument — question stems, all five anchor labels per dimension, and the
-low/high pole text — is also in the config and is written out as
-`output/tables/table0_rating_scale.csv` for the supplement.
+That changes what the analysis has to do, and three differences are worth
+knowing before reading `round2/`:
 
-Nothing needs changing before the final data arrives.
-
-### Scale direction
-
-All three scales run the same way: **a higher rating always means the task is a
-stronger benchmark candidate**, so the same "4 or 5" rule applies to all three
-without reverse-coding.
-
-Worth being explicit about the second one, because the wording inverts what
-"consensus" usually implies:
-
-| Dimension | 4 | 5 |
-|---|---|---|
-| Clinical relevance | High | Very high |
-| Performance variance | Substantial disagreement | Wide disagreement |
-| AI augmentation potential | Clear AI benefit | AI core to this task |
-
-Consensus on **performance variance** therefore means ≥80% of panellists agree
-that competent clinicians *would* disagree about the right path forward. Panel
-agreement about the presence of clinical disagreement — not agreement about the
-task itself.
-
-Note also that the third column in the export is `ai_relevance`, while the
-instrument calls it **AI augmentation potential**. Output uses the instrument
-wording; the column name is left alone so the export loads unmodified.
-
----
-
-## What it computes
-
-**Consensus.** Prespecified before Round 1 as **≥80% of responding panellists
-rating a task 4 or 5** on a given dimension. The denominator is the number who
-answered *that task on that dimension* — not the number invited, and not the
-number who answered anything.
-
-**Eligibility.** A task is eligible for the final taxonomy only if it meets the
-threshold on **all three** dimensions. The leadership round then selects 12
-from the eligible set using the dimension rankings, which the pipeline
-produces. Tasks meeting the threshold on one dimension or none are recorded as
-non-consensus and **retained in the record with the failing dimensions named**,
-not deleted.
-
-**Per dimension** the pipeline reports the number of respondents, the median
-and IQR, and the proportion rating 4 or 5, with **exact counts alongside
-percentages** (`13/17 (76.5%)`) and a Wilson 95% interval.
-
-**Agreement** among panellists: Kendall's coefficient of concordance (*W*) on
-the item rankings, tie-corrected, as the primary measure; the intraclass
-correlation coefficient (**two-way random effects, absolute agreement, average
-measures** — ICC(2,k)) as secondary.
-
-**Between dimensions:** Spearman rank correlations, reported at task level
-(task-mean rating across tasks) with a rating-level version as sensitivity.
-
-**Response rate:** respondents / invited against the prespecified >70%
-threshold, with the number of partial responses reported alongside.
-
-**Not computed: kappa.** The ratings are ordinal and kappa scores a one-point
-and a four-point disagreement alike. This is a deliberate omission, stated in
-the Methods.
-
----
-
-## Handling decisions worth knowing about
-
-These are the places where a reasonable person could have done it differently,
-so they are written down rather than buried.
-
-**Partial responses.** Retained for the dimensions answered and excluded
-elsewhere, per protocol. `output/tables/s6_respondent_completeness.csv` and
-section 1 of the report give the count and the reviewer codes affected.
-
-**Missing data in W and ICC.** Both need a complete tasks × panellists matrix.
-The pipeline drops *panellists* with any missing rating on that dimension and
-keeps all tasks, then names the excluded panellists in the report. Dropping
-tasks instead would silently change which items the concordance is measured
-over.
-
-**Bootstrap interval on W.** Computed by resampling panellists with
-replacement (2000 replicates, seeded). With a small panel this duplicates
-panellists within a replicate and tends to pull *W* upward, so read it as
-indicative of spread rather than a calibrated 95% interval. The chi-square
-*p* value does not depend on it. Set `n_boot = 0` in the config to turn it off.
-
-**Quantiles.** Type 6 (Minitab/SPSS definition) — the conventional choice for
-small-sample ordinal survey data, and what a reader reproducing the IQR by hand
-will get.
-
-**Duplicate submissions.** If a panellist appears twice for the same task, the
-most recent by `completed_at` is kept and a warning is raised. Never silent.
-
-**Selection ranking.** Eligible tasks are ranked by the mean of the three
-agreement proportions, ties broken by the lowest of the three, so a task strong
-on all three outranks a lopsided one. This ranking informs the leadership
-round; it does not replace it.
-
----
-
-## Input format
-
-One row per panellist × task. Required columns:
-
-| Column | Meaning |
-|---|---|
-| `reviewer_code` | Panellist identifier (pseudonymous) |
-| `task_code` | Task identifier, e.g. `T1` |
-| `task_name` | Task description |
-| `clinical_relevance` | Rating 1–5 |
-| `performance_variance` | Rating 1–5 |
-| `ai_relevance` | Rating 1–5 |
-
-Optional and passed through if present: `specialty`, `institution`,
-`flagged_for_discussion`, `comment`, `completed_at`.
-
-This is the shape the Supabase export produces. `null`, `NA`, and empty strings
-are all read as missing. Off-scale values are set to missing with a warning
-rather than silently averaged.
-
----
-
-## Output
-
-Written to `output/`, which is gitignored — everything there is reproducible
-from `run_all.R`, and committing it invites a stale table reaching the
-manuscript.
-
-```
-output/
-├── results_report.txt                 <- every number in the Results paragraph
-├── results.rds                        <- all objects, for further analysis
-├── session_info.txt                   <- R and package versions actually used
-├── figures/
-│   ├── fig1_consensus_by_task.png     <- % rating 4–5 by task, 80% line marked
-│   └── fig2_rating_distribution.png
-└── tables/
-    ├── table0_rating_scale.csv        <- the instrument, for the supplement
-    ├── table1_consensus_by_task.csv   <- main consensus table
-    ├── table2_agreement.csv           <- Kendall W and ICC
-    ├── table3_response_rate.csv
-    ├── s1_dimension_summary_long.csv
-    ├── s2_task_classification.csv     <- eligibility, ranks, failing dimensions
-    ├── s3_rankings_within_dimension.csv
-    ├── s4_spearman_task_level.csv
-    ├── s5_spearman_rating_level.csv
-    └── s6_respondent_completeness.csv
-```
-
-`output/results_report.txt` is the one to read first — it is written so the
-numbers in the manuscript can be generated rather than transcribed.
-
----
-
-## Repository layout
-
-```
-R/
-├── 00_config.R        thresholds, dimensions, paths — all study decisions
-├── 01_setup.R         packages, formatting and small stats helpers
-├── 02_load_clean.R    read, coerce, de-duplicate, audit completeness
-├── 03_consensus.R     per-dimension summaries, 80% rule, eligibility
-├── 04_agreement.R     Kendall W, ICC(2,k), Spearman
-├── 05_response_rate.R response rate vs the 70% threshold
-├── 06_figures.R       figures (base graphics)
-└── 07_report.R        assembles output/results_report.txt
-run_all.R              runs everything
-data/raw/              panel data (gitignored, empty on clone)
-docs/methods.md        the Methods text this code implements
-```
-
----
+- **Partial responses are dropped, not retained.** Round 1 kept a partial
+  response for the dimensions answered, because rating task A says nothing
+  about task B. Positions are relative, so a partial ranking leaves "top 12"
+  undefined for that panellist.
+- **No ICC, and no tie correction on Kendall's W.** A complete 1–17 ranking has
+  no ties, and the intraclass correlation assumes spacing between values that
+  ranks do not have.
+- **Anchoring is part of the design.** Round 2 showed every panellist the same
+  proposed order and asked them to adjust it — the controlled feedback step of
+  a Delphi. So agreement with that order is weaker evidence than an unanchored
+  ranking would give, and `round2/` records how far each task moved
+  (`initial_rank`) precisely so that can be measured rather than assumed.
 
 ## Data and privacy
 
 No panel data is tracked in this repository, de-identified or otherwise.
-Ratings files go in `data/raw/`, which is gitignored, and `*.csv` is ignored
-repo-wide as a backstop.
+Reviewer codes, timestamps and free-text comments are re-identifying in a
+panel this small, so ratings and ranking files stay out of version control
+entirely: `*/data/raw/` is gitignored and a fresh clone has nothing to analyse
+until an export is supplied.
 
-Stripping names and emails is not sufficient de-identification for a panel this
-size. Reviewer codes are stable across rounds, free-text comments carry
-specialty-specific detail, and per-second submission timestamps are close to
-unique — together they re-identify a panellist to anyone holding the roster.
-Treat every ratings export as identifiable and keep it out of git.
+## Requirements
 
----
+R 4.4.1 or later. Round 1 uses `irr` and `psych`; Round 2 uses `irr`. Both
+install what is missing on first run. No tidyverse dependency in either, so
+the analyses reproduce from a bare R install.
 
-## Reproducibility
+## Related repositories
 
-`run_all.R` writes `output/session_info.txt` with the R and package versions
-actually used. The bootstrap is seeded (`CONFIG$boot_seed`), so repeated runs
-on the same data give identical intervals.
-
-The Methods text states R 4.4.1; if you run under a different version, the
-session info records it and the Methods should be updated to match rather than
-the other way round.
+| Repository | Role |
+| --- | --- |
+| [expert-case-review-PACT](https://github.com/perezcodex/expert-case-review-PACT) | The Round 1 instrument — the web app panellists rated in |
+| [PACT_Delphi_Round2](https://github.com/Aschoeff613/PACT_Delphi_Round2) | The Round 2 instrument — the ranking app |
+| [PACT_Literature_Review](https://github.com/Aschoeff613/PACT_Literature_Review) | Task taxonomy derivation, including `taxonomy/pact_17_tasks.json` |
