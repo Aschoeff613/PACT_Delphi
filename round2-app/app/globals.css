@@ -266,6 +266,85 @@ textarea {
   text-overflow: ellipsis;
 }
 
+/* Round 1 means. Fixed-width cells, tabular numerals and a right-aligned
+   group, so the three values line up as columns down the seventeen bars
+   instead of drifting with each title's length. */
+.rank-scores {
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  gap: 4px;
+}
+
+.rank-score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  width: 46px;
+  padding: 4px 0 3px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: rgba(3, 7, 18, 0.55);
+  cursor: help;
+}
+
+.rank-score-key {
+  font-size: 0.52rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+}
+
+.rank-score-val {
+  font-size: 0.76rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+.rank-popout-scores {
+  margin: 0 0 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.rank-popout-scores dl {
+  margin: 6px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.rank-popout-scores dl > div {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.rank-popout-scores dt {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+/* Dotted leader, so the label and its value stay visually paired across the
+   gap when the three labels differ in length. */
+.rank-popout-scores dl > div::before {
+  content: "";
+  order: 1;
+  flex: 1;
+  border-bottom: 1px dotted var(--border);
+  transform: translateY(-3px);
+}
+
+.rank-popout-scores dd {
+  order: 2;
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
 .rank-nudge {
   position: relative;
   flex-shrink: 0;
@@ -378,6 +457,14 @@ textarea {
 
   .rank-question {
     display: none;
+  }
+
+  .rank-score {
+    width: 38px;
+  }
+
+  .rank-score-key {
+    font-size: 0.46rem;
   }
 }
 
