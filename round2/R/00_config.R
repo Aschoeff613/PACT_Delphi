@@ -18,10 +18,9 @@ CONFIG <- list(
   # ranking, not the number invited.
   inclusion_threshold = 0.80,
 
-  # Panel response rate must exceed this. Unchanged from Round 1: this is a
-  # response-rate threshold, not a consensus threshold, and the reviewer
-  # request was about consensus.
-  response_rate_threshold = 0.70,
+  # Panel response rate must exceed this. 0.80 throughout, matching the
+  # technical design document and the Round 1 rule.
+  response_rate_threshold = 0.80,
 
   # Panellists invited to Round 2. Denominator for the response rate.
   n_invited = 50L,

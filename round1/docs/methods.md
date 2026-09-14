@@ -25,7 +25,7 @@ the code does what the manuscript says.
 > ratings across rounds could not be assessed.
 >
 > Panel response rate is reported as respondents divided by invited, against the
-> prespecified threshold of more than 70%. Partially completed responses were
+> prespecified threshold of more than 80%. Partially completed responses were
 > retained for the dimensions answered and excluded elsewhere, and the number
 > affected is reported. Analyses were conducted in R version 4.4.1 (R Foundation
 > for Statistical Computing) using the irr and psych packages; analysis code is
@@ -93,7 +93,7 @@ the supplement cannot drift from the wording in the code.
 | Spearman between the three dimensions | `spearman_dimensions()`, task level primary, rating level as sensitivity | `s4`, `s5` |
 | Kappa not reported | Not implemented, by design; the reason is printed in report §4 | report §4 |
 | Single round, stability not assessable | Stated in report §6 | report §6 |
-| Response rate vs >70% | `response_rate()` in `R/05_response_rate.R` | `table3` |
+| Response rate vs >80% | `response_rate()` in `R/05_response_rate.R` | `table3` |
 | Partial responses retained per dimension, number reported | `audit_completeness()`; per-dimension `NA` handling throughout | `s6`, report §1 |
 | R 4.4.1, irr and psych | `REQUIRED_PKGS` in `R/01_setup.R`; actual versions recorded at run time | `session_info.txt` |
 

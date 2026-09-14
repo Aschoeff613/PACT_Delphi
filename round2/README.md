@@ -56,7 +56,7 @@ Every study decision is in `R/00_config.R`:
 inclusion_threshold     = 0.80,   # >=80% placing the task in the top n_selected
 n_selected              = 12L,    # size of the set the leadership round adopted
 n_tasks                 = 17L,
-response_rate_threshold = 0.70,   # >70% of those invited; not a consensus rule
+response_rate_threshold = 0.80,   # >80% of those invited
 n_invited               = 50L,
 kendall_correct         = FALSE,  # a complete ranking has no ties to correct
 presented_order         = c("T4", "T15", ...)   # the order every panellist saw
@@ -118,7 +118,7 @@ Written to `output/`, all reproducible from `run_all.R`:
 | `tables/table1_inclusion_consensus.csv` | The headline table, best first |
 | `tables/table2_panel_vs_proposed.csv` | Confirmed / challenged / promoted / excluded |
 | `tables/table3_agreement.csv` | Kendall's W with CI |
-| `tables/table4_response_rate.csv` | Response rate vs the >70% threshold |
+| `tables/table4_response_rate.csv` | Response rate vs the >80% threshold |
 | `tables/table5_displacement.csv` | Movement from the presented order |
 | `tables/s1`–`s5` | Long-format inclusion, completeness, crossings, per-panellist movement and concordance |
 | `figures/fig1_inclusion_by_task.png` | Share in the top 12, threshold marked |
@@ -138,7 +138,7 @@ round2/
 │   ├── 03_inclusion.R     the top-12 rule and the verdicts
 │   ├── 04_agreement.R     Kendall's W, per-panellist concordance
 │   ├── 05_displacement.R  movement from the presented order
-│   ├── 06_response_rate.R response rate vs the 70% threshold
+│   ├── 06_response_rate.R response rate vs the 80% threshold
 │   ├── 07_figures.R       base-graphics figures
 │   └── 08_report.R        the plain-text results report
 ├── data/raw/              put the export here; gitignored

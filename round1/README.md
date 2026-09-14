@@ -45,7 +45,7 @@ prespecified values:
 
 ```r
 consensus_threshold     = 0.80,          # >=80% rating 4 or 5
-response_rate_threshold = 0.70,          # >70% of those invited
+response_rate_threshold = 0.80,          # >80% of those invited
 n_invited               = 50L,           # full PACT group, Round 1 invitation
 n_final_taxonomy        = 12L,           # tasks selected by the leadership round
 field_open              = "2026-08-03",  # Round 1 open
@@ -110,7 +110,7 @@ measures** — ICC(2,k)) as secondary.
 **Between dimensions:** Spearman rank correlations, reported at task level
 (task-mean rating across tasks) with a rating-level version as sensitivity.
 
-**Response rate:** respondents / invited against the prespecified >70%
+**Response rate:** respondents / invited against the prespecified >80%
 threshold, with the number of partial responses reported alongside.
 
 **Not computed: kappa.** The ratings are ordinal and kappa scores a one-point
@@ -217,7 +217,7 @@ R/
 ├── 02_load_clean.R    read, coerce, de-duplicate, audit completeness
 ├── 03_consensus.R     per-dimension summaries, 80% rule, eligibility
 ├── 04_agreement.R     Kendall W, ICC(2,k), Spearman
-├── 05_response_rate.R response rate vs the 70% threshold
+├── 05_response_rate.R response rate vs the 80% threshold
 ├── 06_figures.R       figures (base graphics)
 └── 07_report.R        assembles output/results_report.txt
 run_all.R              runs everything

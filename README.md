@@ -30,22 +30,28 @@ cd round2 && Rscript run_all.R     # inclusion consensus on the rankings
 Each round installs what it needs on first run and writes to its own
 `output/`. Neither needs the other to have been run.
 
-## Consensus threshold
+## Thresholds
 
-**80% throughout, in both rounds.** A task has consensus on a dimension
-(Round 1) or for inclusion (Round 2) when at least 80% of *responding*
-panellists put it there.
+**80% everywhere, in both rounds**, per the technical design document:
 
-The threshold was prespecified at 80%, briefly lowered to 70% in this
-repository, and restored to 80% at reviewer request. Supplementary Table S1
-reports 80%, so the code and the supplement now agree. Both rounds read the
-value from their own config — `round1/R/00_config.R`
-(`consensus_threshold`) and `round2/R/00_config.R` (`inclusion_threshold`) —
-and nothing hardcodes it.
+| Threshold | Rule | Config |
+| --- | --- | --- |
+| Consensus, Round 1 | At least 80% of responding panellists rating a task 4 or 5 on a dimension | `round1/R/00_config.R` → `consensus_threshold` |
+| Consensus, Round 2 | At least 80% of panellists placing a task in the top 12 | `round2/R/00_config.R` → `inclusion_threshold` |
+| Response rate, both | More than 80% of those invited | `response_rate_threshold` in each |
 
-The response-rate threshold is a separate thing and remains at >70% in both
-rounds. It is not a consensus threshold, and the reviewer request was about
-consensus.
+Both rounds read these from their own config; nothing hardcodes them.
+
+Two details, since they affect what counts as passing:
+
+- **Consensus is "at least" 80% (≥)**, which is how Supplementary Table S1
+  words it and what reproduces its counts — seven tasks meeting it on clinical
+  relevance, three on AI augmentation potential, none on performance variance.
+- **Response rate is "more than" 80% (>)**, keeping the strict comparison the
+  response-rate rule has always used.
+
+The consensus threshold was briefly lowered to 70% in this repository and has
+been restored, so the code and the supplement now agree.
 
 ## Why Round 2 is not just Round 1 with different numbers
 

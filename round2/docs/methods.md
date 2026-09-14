@@ -68,7 +68,7 @@ against each other and warns if they disagree, rather than trusting either.
 | All 17 placed in one order, 1 to 17 | `CONFIG$n_tasks`, `rank_min`, `rank_max` | report §0 |
 | Same starting order for every panellist | `CONFIG$presented_order`; `presented_order_from_data()` | report §0 |
 | Complete rankings only; partials excluded | `audit_rankings()`, `complete_rankings_only()` | `s2`, report §1 |
-| Response rate against >70% | `response_rate()` in `06_response_rate.R` | `table4` |
+| Response rate against >80% | `response_rate()` in `06_response_rate.R` | `table4` |
 | ≥80% placing a task in the top 12 | `CONFIG$inclusion_threshold`, `CONFIG$n_selected`; `inclusion_summary()` | `table1`, report §2 |
 | Wilson 95% intervals | `wilson_ci()` in `01_setup.R` | `table1`, `fig1` |
 | Mean / median / IQR position | `inclusion_summary()` via `median_iqr()` | `table1`, `fig2` |
