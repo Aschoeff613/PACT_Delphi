@@ -29,7 +29,7 @@ the code does what the manuscript says.
 > retained for the dimensions answered and excluded elsewhere, and the number
 > affected is reported. Analyses were conducted in R version 4.4.1 (R Foundation
 > for Statistical Computing) using the irr and psych packages; analysis code is
-> available at https://github.com/Aschoeff613/PACT_Delphi.
+> available at https://github.com/Aschoeff613/PACT_Delphi_Analysis.
 
 ---
 

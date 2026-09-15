@@ -1,4 +1,4 @@
-# PACT_Delphi
+# PACT_Delphi_Analysis
 
 Analysis code for the PACT Delphi, the modified Delphi process used to select
 the final set of high-risk clinical cognitive tasks for the PACT human–AI
@@ -94,6 +94,11 @@ the analyses reproduce from a bare R install.
 
 | Repository | Role |
 | --- | --- |
-| [expert-case-review-PACT](https://github.com/perezcodex/expert-case-review-PACT) | The Round 1 instrument — the web app panellists rated in |
+| [PACT_Delphi_Round1](https://github.com/Aschoeff613/PACT_Delphi_Round1) | The Round 1 instrument — the web app panellists rated in |
 | [PACT_Delphi_Round2](https://github.com/Aschoeff613/PACT_Delphi_Round2) | The Round 2 instrument — the ranking app |
 | [PACT_Literature_Review](https://github.com/Aschoeff613/PACT_Literature_Review) | Task taxonomy derivation, including `taxonomy/pact_17_tasks.json` |
+
+This repository was named `PACT_Delphi` until the four were renamed to say
+which is which. GitHub redirects the old URL, so a citation already in print
+still resolves — but that redirect only holds while no new repository claims
+the name `PACT_Delphi`, so the name should be left unused.

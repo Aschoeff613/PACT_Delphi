@@ -15,8 +15,8 @@ Stanford HealthRex — PACT (human–AI teaming benchmark).
 ## Quick start
 
 ```bash
-git clone https://github.com/Aschoeff613/PACT_Delphi.git
-cd PACT_Delphi/round1
+git clone https://github.com/Aschoeff613/PACT_Delphi_Analysis.git
+cd PACT_Delphi_Analysis/round1
 Rscript run_all.R
 ```
 
